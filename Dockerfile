@@ -4,8 +4,9 @@ RUN apk add -U python3 py3-pip git avr-libc gcc-avr
 RUN pip install platformio && pio platform install atmelavr
 
 RUN addgroup -S user && adduser -S -G user user
-RUN mv /root/.platformio /home/user && chmod 777 -R /home/user/.platformio
+RUN rm -rf /root/.platformio/packages/toolchain-atmelavr/bin && \
+    mv /root/.platformio /home/user && \
+    ln -s /usr/bin /home/user/.platformio/packages/toolchain-atmelavr/bin
 
 USER user
-
-RUN mv ~/.platformio/packages/toolchain-atmelavr/bin ~/.platformio/packages/toolchain-atmelavr/bin_ && ln -s /usr/bin ~/.platformio/packages/toolchain-atmelavr/bin
+WORKDIR /home/user
