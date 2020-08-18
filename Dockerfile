@@ -5,6 +5,7 @@ RUN pip install platformio && pio platform install atmelavr
 
 RUN addgroup -S user && adduser -S -G user user
 RUN rm -rf /root/.platformio/packages/toolchain-atmelavr/bin && \
+    chown -R user /root/.platformio && \
     mv /root/.platformio /home/user && \
     ln -s /usr/bin /home/user/.platformio/packages/toolchain-atmelavr/bin
 
